@@ -120,6 +120,7 @@ class OCRVideoPlayer:
             height=500,
             muted=True,
 
+
         )
         #수정
         self.video_container = ft.Container(content=self.video_player, width=700, height=500)
@@ -158,7 +159,7 @@ class OCRVideoPlayer:
         self.page.add(self.ocr_results)
 
     # 동영상 변경함수 , ocr동작 포함
-    def change_video(self, video_index):
+    def change_video(self, video_index): # 동영상이 바뀔때 마다 OCR를 수핸한다. 근데 맨처음이면 시작을해야하는데 그거 구현해야함
 
         self.video_player.jump_to(video_index)
         self.current_video_index = int(video_index)
@@ -200,11 +201,15 @@ class OCRVideoPlayer:
     def jump_to_ocr_time(self, e, start_time):
         gotime = start_time * 1000
         self.video_player.seek(int(gotime))
+
+        # 비디오 끝 이벤트 처리기
+
 def main(page: ft.Page):
     urls = [
+        "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
+        "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
         "https://user-images.githubusercontent.com/28951144/229373720-14d69157-1a56-4a78-a2f4-d7a134d7c3e9.mp4",
-        "https://user-images.githubusercontent.com/28951144/229373709-603a7a89-2105-4e1b-a5a5-a6c3567c9a59.mp4",
-        "https://user-images.githubusercontent.com/28951144/229373718-86ce5e1d-d195-45d5-baa6-ef94041d0b90.mp4"
+
     ]
     OCRVideoPlayer(page, urls)
 
