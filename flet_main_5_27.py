@@ -42,7 +42,7 @@ class uiMain:
             print("버튼눌림")
             page.go("/login")
             page.update()
-            await self.run_ocr_background()
+            #await self.run_ocr_background()  # ocr 없으면 주석 ㄱ
 
         page.add(
             Row([
@@ -120,8 +120,6 @@ class uiMain:
                                 title=Text("1강 변수", size=30), bgcolor=colors.SURFACE_VARIANT
                             ),
                             self.player.video_playlist,
-                            self.player.button_container,
-                            self.player.ocr_results,
                             ElevatedButton("강의 복습 및 퀴즈 풀기", on_click=quizGen)
                         ],
                     )

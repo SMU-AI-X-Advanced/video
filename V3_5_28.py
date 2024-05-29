@@ -139,10 +139,14 @@ class OCRVideoPlayer:
             playlist=self.playlist,
             width=700,
             height=500,
-            muted=True,
+            muted=True
         )
         #수정
-        self.video_container = ft.Container(content=self.video_player, width=700, height=500)
+        self.video_container = ft.Container(
+            content=self.video_player,
+            expand=5
+        )
+        
         # 재생목록 설정
         self.playlist_container = ft.Container(
             content=ft.Column([
@@ -152,8 +156,9 @@ class OCRVideoPlayer:
                 ft.ElevatedButton(text="재귀함수", width=250, on_click=lambda e, i=int(2): self.change_video(i)),
             ]),
             alignment=ft.Alignment(0, 1),
-            width=250,
-            height=500
+            # width=250,
+            # height=500,
+            expand=1
         )
         # 버튼 컨트롤러
         self.button_container = ft.Container(
@@ -161,17 +166,37 @@ class OCRVideoPlayer:
                 #ft.ElevatedButton(text="Previous", on_click=lambda e: self.video_player.previous()),
                 ft.ElevatedButton(text="스크립트", on_click=lambda e: self.update_ui(self.current_video_index)),
                 #ft.ElevatedButton(text="Next", on_click=lambda e: self.video_player.next()),
-            ], alignment=ft.MainAxisAlignment.CENTER),
-            width=700,
-            margin=5
+            ],alignment=ft.MainAxisAlignment.CENTER),
+            # width=700,
+            # margin=5,
+            expand=1
         )
+        
+        self.ocr_results = ft.ListView(expand=9)
+        self.script_Container = ft.Container(
+            content=self.ocr_results,
+            expand=9
+        )
+        
+
+        # 스크립트와 버튼을 포함한 컨테이너
+        self.script_playlist = ft.Container(
+            content=ft.Column([
+                self.button_container,
+                self.script_Container
+            ]),
+            bgcolor=ft.colors.BLUE_400,
+            expand=3
+        )
+
+
         # 비디오와 재생목록 레이아웃
         self.video_playlist = ft.Row([
             self.video_container,
+            self.script_playlist,
             self.playlist_container
-        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
-
-        self.ocr_results = ft.ListView(expand=True)
+        ], alignment=ft.MainAxisAlignment.START,expand=True)
+        
 
 
     # 동영상 변경함수 , ocr동작 포함
@@ -204,20 +229,28 @@ class OCRVideoPlayer:
                 value=item["text"],
                 # value=str(n),
                 multiline=True,
-                width=650,
-                height=80
+                width=400,
+                height=70,
+                bgcolor=ft.colors.BLUE_200
             )
 
             go_button = ft.ElevatedButton(
-                text="Go",
+                '　',
+                icon=ft.icons.SEND_ROUNDED,
+                icon_color=ft.colors.PINK_400,
+                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=1)),
                 on_click=lambda e, t=item["start_timestamp"]: self.jump_to_ocr_time(e, t),
-                width=45,
-                height=80
+                width=50,
+                height=70,
+                bgcolor=ft.colors.WHITE
             )
             row = ft.Row([
                 ocr_text_field,
-                go_button
-            ], )
+                go_button],
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=0
+                
+                )
             self.ocr_results.controls.append(row)
         self.page.update()
     # 텍스트에서 ocr 인식 시작지점으로 이동함수

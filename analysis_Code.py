@@ -44,7 +44,7 @@ import difflib
 class Analysis_Code:
     def __init__(self):
         #Openai API 키 등록
-        API_KEY 
+
         os.environ['OPENAI_API_KEY'] = API_KEY
         #LLM 호출 / 정확성을 높이기 위해 GPT-4모델 사용, temperature은 0.1
         self.llm = ChatOpenAI(model="gpt-4")

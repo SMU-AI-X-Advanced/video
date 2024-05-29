@@ -1,0 +1,10 @@
+[
+    {
+        "start_timestamp": 4.166666666666667,
+        "end_timestamp": 8.333333333333334,
+        "text": "import whisper\n\nfrom moviepy.editor import *\n\nfrom transformers import WhisperProcessor, WhisperForConditionalGeneration, AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline\nimport torch\n\ndef convert_to_mp3():\nvideo = VideoFileClip(\"test_lecture.mp4¡±)\nvideo. audio.write_audiofile(\"test_lecture.mp3\")\n\ndef extract_text():\nmodel = WhisperForConditionalGeneration.from_pretrained(¡¯ jiwon65/uhisper-small_korean-zeroth¡¯ )\nresult = model.transcribe('temp.wav', language = \"ja\", task = \"translate\")\n\nsample\n\nwhisper.load_audio(\"test_lecture.mp3¡±)\n\nresult = pipe(sample)\nprint(result[\"text¡±])\nreturn result.text\n\ndef write text(txt):\nwith open(¡®readme.txt¡¯, ¡®w\") as f:\nf.write(txt, encoding = ¡®utf-8\")\n\nif _name_ == \"_main_¡¯\nwrite_text(extract_text())\n\n"
+    },
+    {
+        "start_timestamp": 8.333333333333334,
+        "end_timestamp": 12.5,
+        "text": 
