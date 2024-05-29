@@ -38,10 +38,11 @@ class uiMain:
         user_code_input = TextField(label="코드 입력 하세요", multiline=True,
                                     suffix=ElevatedButton("답안 제출 하기", on_click=analCode))
 
-        def login_btn(e):
+        async def login_btn(e):
             print("버튼눌림")
             page.go("/login")
             page.update()
+            await self.run_ocr_background()
 
         page.add(
             Row([
@@ -75,9 +76,9 @@ class uiMain:
             page.update()
 
         async def quizGen(e):
+            quiz = await self.quizGen.getQuiz()
             page.go("/quizGen")
             page.update()
-            quiz = await self.quizGen.getQuiz()
             return quiz
 
         def getQu():
@@ -164,12 +165,7 @@ class uiMain:
         # 페이지 초기화 및 업데이트
         page.update()
 
-        # OCR 작업을 비동기로 실행하기 위한 별도의 함수 호출
-        #asyncio.create_task(self.run_ocr_background())
-
     async def run_ocr_background(self):
-        # 잠시 대기하여 페이지가 렌더링될 시간을 줍니다
-        await asyncio.sleep(3)
         # OCR 작업을 비동기로 실행
         await self.ocr.process_ocr()
 
