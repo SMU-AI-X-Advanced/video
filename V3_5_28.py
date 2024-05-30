@@ -14,7 +14,7 @@ class VideoOCR:
     def __init__(self, url):
         self.url = url
         self.detected_texts = [] # 인식 텍스트 저장
-        self.videoOCRIndex=0
+        self.videoOCRIndex=int(0)
 
     #  url 동영상 프레임,fps 가져오는 비동기함수
     async def get_video_resolution(self,index):
@@ -48,7 +48,7 @@ class VideoOCR:
 
 
     def save_results(self,detected_texts, output_file):
-        with open('vidoe'+str(output_file)+'.json', 'w', encoding='cp949') as file:
+        with open('vidoe'+str(output_file)+'.json', 'w', encoding='UTF-8') as file:
             json.dump(detected_texts, file, indent=4, ensure_ascii=False)
     # 비동기식 ocr 수행 함수
     async def process_video(self, index,frame_sampling_rate=10, similarity_threshold=0.23):
@@ -85,9 +85,9 @@ class VideoOCR:
                     if text.strip() and (not current_text or difflib.SequenceMatcher(None, text, current_text).ratio() < similarity_threshold):
                         if current_text:
                             self.detected_texts.append({
-                                "start_timestamp": start_time,
-                                "end_timestamp": frame_count / fps,
-                                "text": current_text
+                                "code_start_timestamp": start_time,
+                                "code_end_timestamp": frame_count / fps,
+                                "code_text": current_text
                             })
                         current_text = text
                         start_time = frame_count / fps
@@ -98,9 +98,9 @@ class VideoOCR:
 
         if current_text:
             self.detected_texts.append({
-                "start_timestamp": start_time,
-                "end_timestamp": frame_count / fps,
-                "text": current_text
+                "code_start_timestamp": start_time,
+                "code_end_timestamp": frame_count / fps,
+                "code_text": current_text
             })
         #json 저장
         self.save_results(self.detected_texts,index)
@@ -118,6 +118,11 @@ class VideoOCR:
         await self.process_video(1)
         await self.process_video(2)
         print("OCR끝")
+    
+
+    
+
+   
 
 class OCRVideoPlayer:
     def __init__(self, page: ft.Page, urls):
@@ -139,13 +144,11 @@ class OCRVideoPlayer:
             playlist=self.playlist,
             width=700,
             height=500,
-            muted=True
+            muted=True,
+            
         )
         #수정
-        self.video_container = ft.Container(
-            content=self.video_player,
-            expand=5
-        )
+        
         
         # 재생목록 설정
         self.playlist_container = ft.Container(
@@ -154,11 +157,15 @@ class OCRVideoPlayer:
                 ft.ElevatedButton(text="반복문", width=250, on_click=lambda e, i=int(0): self.change_video(i)),
                 ft.ElevatedButton(text="조건문", width=250, on_click=lambda e, i=int(1): self.change_video(i)),
                 ft.ElevatedButton(text="재귀함수", width=250, on_click=lambda e, i=int(2): self.change_video(i)),
+                ft.ElevatedButton(text="반복문", width=250, on_click=lambda e, i=int(3): self.change_video(i)),
+                ft.ElevatedButton(text="조건문", width=250, on_click=lambda e, i=int(4): self.change_video(i)),
+                ft.ElevatedButton(text="재귀함수", width=250, on_click=lambda e, i=int(5): self.change_video(i)),
             ]),
-            alignment=ft.Alignment(0, 1),
-            # width=250,
+            alignment=ft.alignment.center,
+            width=300,
+            bgcolor=ft.colors.GREY_100,
             # height=500,
-            expand=1
+            expand=3
         )
         # 버튼 컨트롤러
         self.button_container = ft.Container(
@@ -171,11 +178,33 @@ class OCRVideoPlayer:
             # margin=5,
             expand=1
         )
+
+
+        
+        self.video_button_container = ft.Container(
+            content=ft.Row([
+                ft.ElevatedButton(text="Previous", on_click=self.previous_video),
+                ft.ElevatedButton(text="Next", on_click=self.next_video),
+            ],alignment=ft.MainAxisAlignment.CENTER),
+            width=700,
+        )
+        self.side_bar_container = ft.Container(
+            content=ft.Column([
+                ft.ElevatedButton(text="재생목록",on_click=self.show_playlist,width=100,),
+                ft.ElevatedButton(text="스크립트",on_click=self.show_script,width=100),
+                ft.ElevatedButton(text="메모장",width=100),
+                ft.ElevatedButton(text="Q&A",width=100),
+                
+            ])
+        )
         
         self.ocr_results = ft.ListView(expand=9)
+
+        # OCR 스크립트
         self.script_Container = ft.Container(
             content=self.ocr_results,
-            expand=9
+            expand=9,
+            border_radius=ft.border_radius.all(10)
         )
         
 
@@ -185,19 +214,47 @@ class OCRVideoPlayer:
                 self.button_container,
                 self.script_Container
             ]),
-            bgcolor=ft.colors.BLUE_400,
-            expand=3
+            bgcolor=ft.colors.GREY_100,
+            expand=3,
+            width=300,
         )
+        # 비디오 + 이전 이후 버튼
+        self.video_container = ft.Container(
+            content=ft.Column([
+                self.video_player, # 비디오 + 버튼
+                self.video_button_container # 
+        ], alignment=ft.MainAxisAlignment.CENTER),
+        expand=5
+    )
 
 
-        # 비디오와 재생목록 레이아웃
+        # 전체 
         self.video_playlist = ft.Row([
             self.video_container,
             self.script_playlist,
-            self.playlist_container
+            self.side_bar_container        
+            
         ], alignment=ft.MainAxisAlignment.START,expand=True)
-        
 
+       
+        
+    def previous_video(self, e):
+        if self.current_video_index > 0:
+            self.current_video_index -= 1
+            self.change_video(self.current_video_index)
+  
+    def next_video(self, e):
+        if self.current_video_index < len(self.urls) - 1:
+            self.current_video_index += 1
+            self.change_video(self.current_video_index)
+
+    def show_playlist(self, e):
+        self.video_playlist.controls[1] = self.playlist_container
+        self.page.update()
+
+    def show_script(self, e):
+        self.video_playlist.controls[1] = self.script_playlist
+        self.page.update()
 
     # 동영상 변경함수 , ocr동작 포함
     def change_video(self, video_index):
@@ -221,12 +278,12 @@ class OCRVideoPlayer:
     def update_ui(self,index):
         path ='vidoe'+str(index)+'.json'
         print(path)
-        with open(path,'r', encoding='cp949') as file:
+        with open(path,'r', encoding='UTF-8') as file:
             data=json.load(file)
         self.ocr_results.controls.clear()
         for item in data:
             ocr_text_field = ft.TextField(
-                value=item["text"],
+                value=item["code_text"],
                 # value=str(n),
                 multiline=True,
                 width=400,
@@ -239,7 +296,7 @@ class OCRVideoPlayer:
                 icon=ft.icons.SEND_ROUNDED,
                 icon_color=ft.colors.PINK_400,
                 style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=1)),
-                on_click=lambda e, t=item["start_timestamp"]: self.jump_to_ocr_time(e, t),
+                on_click=lambda e, t=item["code_start_timestamp"]: self.jump_to_ocr_time(e, t),
                 width=50,
                 height=70,
                 bgcolor=ft.colors.WHITE
@@ -267,7 +324,7 @@ def main(page: ft.Page):
         "https://user-images.githubusercontent.com/28951144/229373720-14d69157-1a56-4a78-a2f4-d7a134d7c3e9.mp4",
 
     ]
-    OCRVideoPlayer(page, urls)
+    ocr=OCRVideoPlayer(page, urls) ####
 
 if __name__ == "__main__":
     ft.app(main)

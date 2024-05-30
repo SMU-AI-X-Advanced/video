@@ -99,5 +99,5 @@ def extract_speech_texts(transcriptions, start_time, end_time, audio_duration):
     return related_speech_texts
 
 # 실행 예시
-video_path = './assets/test_video.mp4'
+video_path = './assets/test_video2.mp4'
 extract_code_from_video_enhanced(video_path)

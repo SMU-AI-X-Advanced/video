@@ -1,10 +1,50 @@
 [
     {
-        "start_timestamp": 4.166666666666667,
-        "end_timestamp": 8.333333333333334,
-        "text": "import whisper\n\nfrom moviepy.editor import *\n\nfrom transformers import WhisperProcessor, WhisperForConditionalGeneration, AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline\nimport torch\n\ndef convert_to_mp3():\nvideo = VideoFileClip(\"test_lecture.mp4��)\nvideo. audio.write_audiofile(\"test_lecture.mp3\")\n\ndef extract_text():\nmodel = WhisperForConditionalGeneration.from_pretrained(�� jiwon65/uhisper-small_korean-zeroth�� )\nresult = model.transcribe('temp.wav', language = \"ja\", task = \"translate\")\n\nsample\n\nwhisper.load_audio(\"test_lecture.mp3��)\n\nresult = pipe(sample)\nprint(result[\"text��])\nreturn result.text\n\ndef write text(txt):\nwith open(��readme.txt��, ��w\") as f:\nf.write(txt, encoding = ��utf-8\")\n\nif _name_ == \"_main_��\nwrite_text(extract_text())\n\n"
+        "code_start_timestamp": 4.166666666666667,
+        "code_end_timestamp": 8.333333333333334,
+        "code_text": "import whisper\nfrom moviepy.editor import *\nfrom transformers import WhisperProcessor, WhisperForConditionalGeneration, AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline\nimport torch\ndef convert_to_mp3():\nvideo = VideoFileClip(\"test_lecture.mpa”)\nvideo. audio.write audiofile(\"test_lecture.mp3”)\ndef extract_text():\nmodel = WhisperForConditionalGeneration.from_pretrained(‘ jiwon65/uhisper-small_korean-zeroth\" )\nresult = model.transcribe(‘temp.wav', language = “ja”, task = \"translate\")\nsample = whisper.load_audio(\"test_lecture.mp3\")\nresult = pipe(sample)\nprint(result[\"text”])\nreturn result.text\ndef write text(txt):\nwith open(‘readme.txt\", ‘w\") as f:\nf.write(txt, encoding = ‘utf-8\")\nif _name_ == \"_main_\":\nwrite_text(extract_text())\n",
+        "related_speech_texts": ""
     },
     {
-        "start_timestamp": 8.333333333333334,
-        "end_timestamp": 12.5,
-        "text": 
+        "code_start_timestamp": 8.333333333333334,
+        "code_end_timestamp": 12.5,
+        "code_text": "initial_messages = [\n(코드 천석 Sea) gic)\n|\ndef chat(msg, hist):\n| return “ok”\nci = gr.Chatinterface(chat)\nwith gr.Blocks(gr.themes.Monochrome()) as demo:\nwith gr.Row():\nwith gr.Column():\nvideo_player = gr.Video(label=\"4|[|2 플레이어\")\ntimestamp_table = gr.Dataframe(label=\"E}2}* \"=\", headers=[\"Time\", “Code\"])\nquestion input = gr.Textbox(label=\"E}0]4{ 생성된 문제\", placeholder=\"0{7|0] 질문이 생성됨\")\nexample_output = gr.Dataframe(show_table(),label = \"예시 출력\")\nwith gr.Column():\nvideo_list = gr.Dropdown(label=\"H|C|2 리스트\", choices=[\"Video 1\", \"Video 2\", \"Video 3\"]) # Placeholder choices\ncode_input = gr.Textbox(label=\"Code Editor\", placeholder=\"0j7|0] 코드를 입력\", lines-10)\nci.render()\n# chatbot = gr.Chatbot(value=initial_messages)\n# msg = gr.Textbox(label=\"QIA|Al 입력\", placeholder-\"M@ 메시지\")\n# send_button = gr.Button(\"SLH7|\")\n# clear = gr.ClearButton([msg, chatbot])\n# create_diary_button = gr.Button(\"27| 생성\")\ndemo. launch()\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 12.5,
+        "code_end_timestamp": 16.666666666666668,
+        "code_text": "def extract_code_from_video_enhanced(video path, frame_sampling rate=100, similarity threshold=0.23):\ncap = cv2.VideoCapture(video_path)\ntimestamps = []\ntexts = []\nret, prev_frame = cap.read()\nprev_frame = advanced_preprocess(prev_frame)\nprev_text = \"\"\nframe_count = @\nwhile cap.isOpened():\nret, frame = cap.read()\nif not ret:\nbreak\nif frame_count % frame_sampling rate == @:\nprocessed_frame = advanced_preprocess(frame)\nif detect_significant_change(processed_frame, prev_frame):\ntext = enhanced_ocr(processed_frame)\nif text.strip() != \"\" and text_similarity(text, prev_text) < similarity threshold:\ntimestamps. append(frame_count / cap.get(cv2.CAP_PROP_FPS))\ntexts. append(text)\nprev_text = text\nprev_frame = processed_frame\nprint (timestamps, text)\nframe_count += 1\ncap.release()\nsave_results (timestamps, texts)\n# 실행 예시\nvideo_path = '2024-04-08 18-22-02.mp4*\nextract_code_from_video_enhanced(video_path)\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 16.666666666666668,
+        "code_end_timestamp": 25.0,
+        "code_text": "# 007 모델을 사용하여 텍스트 수정\n\n# def refine_code with _gpt(texts):\n\n# — refined_codes = []\n\n# for text in texts:\n\n#       # LangChainS 통해 607 API SB, ‘texts’ 인자가 리스트임을 보장\n#       response = gpt.generate([text], max_tokens=256) # ‘texts’ 리스트로 전달\n#       refined_code = response[ ‘choices ][@][’text’].strip()\n\n#        refined_codes.append(refined_code)\n\n# return refined_codes\n\n# # 예제 사용\n\n# texts = [result]\n\n# refined_codes = refine_code_with_gpt(texts)\n\n## 결과 출력\n\n# for code in refined_codes:\n\n# print (code)\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 25.0,
+        "code_end_timestamp": 33.333333333333336,
+        "code_text": "이\na\n\n“timestamp”: 223.33314465143133,\n\n“text”: \"te ee [flhe? go eS pe tte ay el-\\n-. + [fa pre bese wy!\\naa 1\" tye wn [] f] * act | | “\\ney } | Ae | ee ; } — “yah wv [\\n\\nar i om 6 \\\\a™ c\nhb\ni\n\n“timestamp”: 224.99980991002408,\n\n“text\": \"a “ 20 £1 OSS m4 | pede\\n- 7 * . w. a net{] 1 \"1021 at fl > be [f ffl \\naa \\\\we Ges, gine ( j Lt t's ,\\nae ‘ Foal w * N wae toa, .\\nLod AY 4\n3\n{\n\n“timestamp”: 226.66647516861687,\n\n“text”: \"tre ae T= bed 4 Mig, oem Le | | fede\\nat ae oF , ' [f\\n[ht Cane pom } ae ,\\ntwee NL @ ~ tb | | |\\nEs a weed Ce eh eee : ce {\\nT [J e- \\\\\nde\n{\n\n“timestamp”: 228.33314042720963,\n\n\"text\": “tre ae Jf > ee 9g) Segthe\\nohne tye oR er! 4 | ,\\nOy aie yah: 2. EE Y adel Ge\\nbw ML NGG nm Cet a\\nCF, Nee My gol ag aletey a Xt 3 11\\nF\nbe\n{\n\n“timestamp”: 231.66647094439517,\n\n“text™: \"|\\niB vie 7t=\\n}\\n”\nFy\na\n\n“timestamp”: 233-33313620298793,\n\n“text”: \"a\\nfe\\n| Tr ~-\\ni on ee re i _ 7\\nfhh bes ty\\n=e | fou com\\na re\\neee oe Toe Z\\nTee ern 02, os =\\neee HE ES ucue7¢c\\nFi aterernee fll ra\nte\n4\n\n“timestamp”; 234.99980146158072,\n\ntext\": \">\\n\\n{ ref } from ‘vue®\\ndefault {\\na() {\\n\\ncount = ref(@)\\nction increase()\\nount.value += 10000 {\\n\\nffount,\\nncrease\\n» Pas\\n”\nds\nt\n\n“timestamp”: 236.66646672017347,,\n\n\"text\": \"demmexda ” QReeremrereercy =\\nAE PSA ANE 2797)\\n$2 PLCS OF: ELAIOE Ret\\nFSB0 Ohl ey Atpiol ares aod EAHA i.\\nto _ Marketing\\nete Cy1)\\nb\nds\n1\n\n“timestamp”: 238.33313197876626,\n\ntext\": “,\\n; als | Zko\\ny0 °\\n\"\nts\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 33.333333333333336,
+        "code_end_timestamp": 37.5,
+        "code_text": "import whisper\nfrom moviepy.editor import *\nfrom transformers import WhisperPracessor, WhisperForConditionalGeneration, AutoModelFarSpeechSeq2Seq, AultoProcessor, pipeline\nimport torch\ndef convert_to_mp3():\nvideo = VideoFileClip(\"test_lecture.mpa”)\nvideo. audio.write audiofile(“test_lecture.mp3\")\ndef extract_text():\nmodel = WhisperForConditionalGeneration.from_pretrained(’jiwon6S/whisper-small_koreen-zeroth’ )\nresult = model.transcribe(’temp.wav', language = \"ja\", task = \"translate\")\nsample = whisper. load_audio(“test_lecture.mp3\")\nresult = pipe(sample)\nprint(result[\"text”])\nreturn result.text\ndef write text(txt):\nwith open( ‘readme.txt’, ‘w\") as f:\nf.write(txt, encoding = ‘utf-8\")\nif 2 0006. == “_main_\":\nwrite_text(extract_text())\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 37.5,
+        "code_end_timestamp": 41.666666666666664,
+        "code_text": "initial_messages = [\nCBS #4 254 Ma\")\n]\ndef chat(msg, hist):\n| return “ok”\nci = gr.Chatinterface(chat)\nwith gr.Blocks(gr.themes.Monochrome()) as demo:\nwith gr.Row():\nwith gr.Column():\nvideo_player = gr.Video(label=\"4/[|2 플레이어\")\ntimestamp_table = gr.Dataframe(label=-\"E}2i* \"=\", headers=[\"Time”, “Code\"])\nquestion_input = gr.Textbox(label=\"SEi|4{ 생성된 문제\", placeholder=\"0{7|0] 질문이 Sse\")\nexample_output = gr.Dataframe(show_table(),label = \"예시 출력\")\nwith gr.Column():\nvideo_list = gr.Dropdown(label=\"H|C|2 리스트\", choices=[\"video 1\", “Video 2\", \"Video 3\"]) # Placeholder choices\ncode_input = gr.Textbox(label=\"Code Editor\", placeholder=\"0j7|0] 코드를 입력\", lines=10)\nci.render()\n# chatbot = gr.Chatbot (value=initial_messages)\n# msg = gr.Textbox(label=\"QA|Al 입력\", placeholder=\"AiJ 메시지\")\n# send_button = gr.Button(\"SLH7|\")\n# clear = gr.ClearButton([msg, chatbot])\n# create_diary button = gr.Button(\"27] 생성\")\ndemo. launch()\n",
+        "related_speech_texts": ""
+    },
+    {
+        "code_start_timestamp": 41.666666666666664,
+        "code_end_timestamp": 47.5,
+        "code_text": "#4 007 모델을 사용하여 텍스트 수정\n\n# def refine_code with _gpt (texts):\n\n# —— refined_codes = []\n\n# for text in texts:\n\n#       # LangChainS 통해 607 aPI SB, ‘texts’ 인자가 리스트임을 보장\n#       response = gpt.generate([text], max_tokens=256) # ‘texts’ 리스트로 전달\n#       refined_code = response[ ‘choices’ ][@][text’].strip()\n\n#       refined_codes.append(refined_code)\n\n# return refined_codes\n\n## 예제 사용\n\n# texts = [result]\n\n# refined_codes = refine_code_with_gpt(texts)\n\n## 결과 출력\n\n# for code in refined_codes:\n\n# —— print(code)\n",
+        "related_speech_texts": ""
+    }
+]

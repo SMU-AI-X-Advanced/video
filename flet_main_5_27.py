@@ -22,7 +22,7 @@ class uiMain:
 
     async def main(self, page: Page):
         self.userCode = ''
-
+        page.bgcolor = colors.WHITE
         async def analCode(e):
             page.go("/analCode")
             self.userCode = user_code_input.value
@@ -33,7 +33,44 @@ class uiMain:
         page.title = "다해 PYTHON 인강"
         page.window_width = 1500
         image = Image(src="/assets/image/main_page.png", width=400, height=400, fit=ImageFit.COVER)
-        id_TF = TextField(label="아이디를 입력해주세요.")
+        id_TF = TextField(label="아이디를 입력해주세요.",width=100)
+        pw_TF = TextField(label="아이디를 입력해주세요.",width=100)
+        pb1 = ft.MenuBar(
+            style=ft.MenuStyle(
+                bgcolor=ft.colors.WHITE),
+            controls=[
+                    ft.SubmenuButton(
+                        content= Column([Image(src="./assets/image/video.png",width=50,height=50),Text("강의 목록",size=15,)],alignment=MainAxisAlignment.CENTER,tight=True),
+                        style= ft.ButtonStyle(bgcolor=colors.WHITE),
+                        controls=[
+                            ft.MenuItemButton(
+                                content = Text("변수"),
+                                on_click =lambda e: sel_lecture(e, 1)
+                            ),
+                            ft.MenuItemButton(
+                                content = Text("상수"),
+                                on_click =lambda e: sel_lecture(e, 2)
+                            ),
+                            ft.MenuItemButton(
+                                content = Text("정렬"),
+                                on_click =lambda e: sel_lecture(e, 3)
+                            ),
+                            ft.MenuItemButton(
+                                content = Text("반복"),
+                                on_click =lambda e: sel_lecture(e, 4)
+                            ),
+                            ft.MenuItemButton(
+                                content = Text("조건"),
+                                on_click =lambda e: sel_lecture(e, 5)
+                            ),
+                            ft.MenuItemButton(
+                                content = Text("하자"),
+                                on_click =lambda e: sel_lecture(e, 6)
+                            )
+                        ]
+                    )
+                ]
+            )
         quiz = ''
         user_code_input = TextField(label="코드 입력 하세요", multiline=True,
                                     suffix=ElevatedButton("답안 제출 하기", on_click=analCode))
@@ -42,15 +79,48 @@ class uiMain:
             print("버튼눌림")
             page.go("/login")
             page.update()
-            #await self.run_ocr_background()  # ocr 없으면 주석 ㄱ
+            await self.run_ocr_background()  # ocr 없으면 주석 ㄱ
+
 
         page.add(
-            Row([
-                Image(src="./assets/image/main_page.png", width=400, height=400, fit=ImageFit.CONTAIN),
-                Text("로그인 화면", size=20, color=colors.WHITE, bgcolor=colors.BLUE_400, weight=FontWeight.BOLD)
-            ]),
-            id_TF,
-            ElevatedButton("로그인", on_click=login_btn)
+            Container(
+                content = Row([
+                    Image(src="./assets/image/icon.png", width=200,height=70, fit=ImageFit.FILL),
+                    Text("초심자도 쉽게 확실하게 배우자!"),
+                    Container(width=0, expand=True),
+                    Text("로그인 / 회원가입",size=15)
+                    ],
+                    alignment=ft.MainAxisAlignment.START,            
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER
+                ),
+                width=page.window_width,
+                bgcolor=colors.WHITE
+ 
+            ),
+            Container(
+                content= Row([
+                    Container(content=Column([Image(src="./assets/image/company.png",width=50,height=50),Text("회사 소개",size=15,)],alignment=MainAxisAlignment.CENTER),border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                    Container(content=pb1,border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                    Container(content=Column([Image(src="./assets/image/test.png",width=50,height=50),Text("코딩 테스트",size=15,)],alignment=MainAxisAlignment.CENTER),border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                    Container(content=Column([Image(src="./assets/image/my_page.png",width=50,height=50),Text("마이 페이지",size=15,)],alignment=MainAxisAlignment.CENTER),border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                    Container(content=Column([Image(src="./assets/image/counsel.png",width=50,height=50),Text("고객 센터",size=15,)],alignment=MainAxisAlignment.CENTER),border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                    Container(content=Column([Image(src="./assets/image/qna.png",width=50,height=50),Text("Q & A",size=15,)],alignment=MainAxisAlignment.CENTER),border=ft.border.all(0.3, "black"),width= 200,height=100,alignment=ft.alignment.center,bgcolor=colors.WHITE),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=0
+                ),
+            ),
+            Container(
+                content= Row(
+                [   Container(
+                    width=200,height=0),
+                    Image(src="./assets/image/main_banner.png", width=page.window_width-400,height=400, fit=ImageFit.FILL),
+                    Container(width=200,height=0),
+            ],
+            width=page.window_width,
+            height=400,
+            ),
+            ),
         )
 
         async def getAnalCode():
@@ -59,17 +129,6 @@ class uiMain:
         def check_item_clicked(e):
             e.control.checked = not e.control.checked
             page.update()
-
-        pb = PopupMenuButton(
-            items=[
-                PopupMenuItem(ElevatedButton("퀵 정렬")),
-                PopupMenuItem(),
-                PopupMenuItem(ElevatedButton("삽입 정렬")),
-                PopupMenuItem(),
-                PopupMenuItem(ElevatedButton("버블 정렬")),
-                PopupMenuItem(),
-            ]
-        )
 
         def sel_lecture(e, lecture_num):
             page.go(f"/lecture{lecture_num}")
