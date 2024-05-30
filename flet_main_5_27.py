@@ -28,7 +28,6 @@ class uiMain:
             self.userCode = user_code_input.value
             ac = await getac(user_code_input.value)
             page.update()
-            print("d")
             return ac
 
         page.title = "다해 PYTHON 인강"
