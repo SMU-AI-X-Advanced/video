@@ -161,9 +161,9 @@ class uiMain:
                             Row([Text("1주차강의(변수)"), ElevatedButton("1강", on_click=lambda e: sel_lecture(e, 1))]),
                             Row([Text("2주차강의(상수)"), ElevatedButton("2강", on_click=lambda e: sel_lecture(e, 2))]),
                             Row([Text("3주차강의(정렬)"), ElevatedButton("3강", on_click=lambda e: sel_lecture(e, 3))]),
-                            Row([Text("4주차강의(몰랑)"), ElevatedButton("4강", on_click=lambda e: sel_lecture(e, 4))]),
-                            Row([Text("5주차강의(하기)"), ElevatedButton("5강", on_click=lambda e: sel_lecture(e, 5))]),
-                            Row([Text("6주차강의(싫어)"), ElevatedButton("6강", on_click=lambda e: sel_lecture(e, 6))]),
+                            Row([Text("4주차강의(함수)"), ElevatedButton("4강", on_click=lambda e: sel_lecture(e, 4))]),
+                            Row([Text("5주차강의(객체)"), ElevatedButton("5강", on_click=lambda e: sel_lecture(e, 5))]),
+                            Row([Text("6주차강의(조건)"), ElevatedButton("6강", on_click=lambda e: sel_lecture(e, 6))]),
                         ],
                     )
                 )
