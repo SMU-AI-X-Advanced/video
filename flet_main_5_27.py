@@ -13,7 +13,6 @@ class uiMain:
         self.quizGen = Quizgen()
         self.ac = Analysis_Code()
         self.urls = [
-            "https://user-images.githubusercontent.com/28951144/229373720-14d69157-1a56-4a78-a2f4-d7a134d7c3e9.mp4",
             "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
             "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
 
@@ -72,14 +71,14 @@ class uiMain:
                 ]
             )
         quiz = ''
-        user_code_input = TextField(label="코드 입력 하세요", multiline=True,
+        user_code_input = TextField(label="코드 입력 하세요", multiline=True,height=400,
                                     suffix=ElevatedButton("답안 제출 하기", on_click=analCode))
 
         async def login_btn(e):
             print("버튼눌림")
             page.go("/login")
             page.update()
-            await self.run_ocr_background()  # ocr 없으면 주석 ㄱ
+            #await self.run_ocr_background()  # ocr 없으면 주석 ㄱ
 
 
         page.add(

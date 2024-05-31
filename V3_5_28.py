@@ -321,7 +321,6 @@ def main(page: ft.Page):
     urls = [
         "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
         "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
-        "https://user-images.githubusercontent.com/28951144/229373720-14d69157-1a56-4a78-a2f4-d7a134d7c3e9.mp4",
 
     ]
     ocr=OCRVideoPlayer(page, urls) ####
