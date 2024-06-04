@@ -13,6 +13,7 @@ class uiMain:
         self.quizGen = Quizgen()
         self.ac = Analysis_Code()
         self.urls = [
+            "https://youtu.be/KGyK-pNvWos",
             "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
             "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
 
@@ -43,28 +44,24 @@ class uiMain:
                         style= ft.ButtonStyle(bgcolor=colors.WHITE),
                         controls=[
                             ft.MenuItemButton(
-                                content = Text("변수"),
+                                content = Text("합병 정렬"),
                                 on_click =lambda e: sel_lecture(e, 1)
                             ),
                             ft.MenuItemButton(
-                                content = Text("상수"),
+                                content = Text("퀵 정렬"),
                                 on_click =lambda e: sel_lecture(e, 2)
                             ),
                             ft.MenuItemButton(
-                                content = Text("정렬"),
+                                content = Text("선택 정렬"),
                                 on_click =lambda e: sel_lecture(e, 3)
                             ),
                             ft.MenuItemButton(
-                                content = Text("반복"),
+                                content = Text("버블 정렬"),
                                 on_click =lambda e: sel_lecture(e, 4)
                             ),
                             ft.MenuItemButton(
-                                content = Text("조건"),
+                                content = Text("순차 정렬"),
                                 on_click =lambda e: sel_lecture(e, 5)
-                            ),
-                            ft.MenuItemButton(
-                                content = Text("하자"),
-                                on_click =lambda e: sel_lecture(e, 6)
                             )
                         ]
                     )
@@ -123,7 +120,20 @@ class uiMain:
         )
 
         async def getAnalCode():
-            return self.ac.getAC()
+            text = self.ac.getAC()
+            # 줄 단위로 분리
+            lines = text.split('\n')
+
+            # 각 줄의 시작 부분에 있는 불필요한 공백을 제거
+            processed_lines = [line.lstrip() for line in lines]
+
+            # 다시 문자열로 결합
+            processed_value = ''.join(processed_lines)
+            # 중괄호로 감싸기
+            json_text = '{' + processed_value + '}'
+            print(json_text)
+            A_code_json = json.loads(json_text)
+            return A_code_json
 
         def check_item_clicked(e):
             e.control.checked = not e.control.checked
@@ -147,7 +157,6 @@ class uiMain:
             return await self.ac.run(quiz=quiz, user_code=user_code)
 
         async def route_change(e):
-            print("login은 눌리네")
             page.views.clear()
             if page.route == "/login":
                 page.views.append(
@@ -201,10 +210,12 @@ class uiMain:
                         "/analCode",
                         [
                             AppBar(title=Text("사용자 코드 분석 결과 ", size=30), bgcolor=colors.SURFACE_VARIANT),
+                            Text("\n*문제*", size=22),
+                            Text((await getAnalCode())["문제"]),
                             Text("*사용자가 입력한 코드*", size=22),
                             Text(user_code_input.value),
                             Text("\n*분석 결과*", size=22),
-                            Text(await getAnalCode()),
+                            Text((await getAnalCode())["분석 결과"]),
                         ],
                     )
                 )

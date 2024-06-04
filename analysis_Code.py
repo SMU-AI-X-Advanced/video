@@ -44,7 +44,6 @@ import difflib
 class Analysis_Code:
     def __init__(self):
         #Openai API 키 등록
-
         os.environ['OPENAI_API_KEY'] = API_KEY
         #LLM 호출 / 정확성을 높이기 위해 GPT-4모델 사용, temperature은 0.1
         self.llm = ChatOpenAI(model="gpt-4")
@@ -72,16 +71,22 @@ class Analysis_Code:
                         분석 과정에서 사용자의 코드를 수정해서 답변으로 보여주지 말 것.
                         답변은 사용자의 코드 중 어느 부분이 개선되면 좋을 것 같은지 알려줄 것.
                         출력 형식은 Json으로 파싱할 수 있도록 Json 형태의 문자열로 제공할 것.
-                        Json의 Key 값으로는 아래 예시와 같이 "문제, 사용자 코드, 분석 결과, 권장 알고리즘"으로 구성해서 제공할 것.
+                        Json의 Key 값으로는 아래 예시와 같이 "문제, 분석 결과, 권장 알고리즘"으로 구성해서 제공할 것.
                         권장 알고리즘은 분석 과정에서 더 효율적인 알고리즘이 있으면 작성하고 더 효율적인 알고리즘이 없다면 value에 0을 넣어 제공할 것.
                         아래의 출력 예시를 참고해서 답변할 것.
+                        *중요* 출력은 JSON형식으로 답하고 각 문장은 줄바꿈으로 잘 표현할 것.
+                        *중요* 문제는 요약해서 한줄로 표현할 것.
+                        *중요* 출력에서 딕셔너리 형태의 문제, 분석 결과, 권장 알고리즘을 제외한 추가적인 너의 답변은 절대 하지 말 것.
+                        *중요* 출력에는 문제, 분석 결과, 권장 알고리즘은 무조건 존재할 것! 나머지는 존재하지 말 것!
+                        *중요* 출력 예시를 벗어나는 답변(추가 수정된 코드나 조언, 힌트 등)은 절대 하지 말 것.
+                        *중요* 권장 알고리즘은 [퀵 정렬, 순차 정렬, 버블 정렬, 병합 정렬] 안에 해당하는 내용이 없으면 0을 출력하고 해당하는 내용이 있으면 해당 단어만 출력할 것.
 
                         출력 예시:
                         "분석 결과": "1. 문제에 적합한 코드를 작성하셨습니다.
                                     2. Syntex Error 문제가 없이 잘 동작하는 코드를 작성했습니다.
                                     3. 그러나 리스트 정렬 알고리즘에서 문제의 크기(N)에 따라 시간복잡도가 효율적인 퀵, 병합 정렬을 사용하는 것을 권장합니다.
                                     4. 코드에서 2번 째 줄인 "num = 0"은 사용하지 않는 코드로 지우는 것을 권장합니다."
-                        "권장 알고리즘": "퀵, 병합"
+                        "권장 알고리즘": "퀵 정렬, 병합 정렬"
                         """
         self.promptF = ChatPromptTemplate.from_messages([
                     ("system",self.prompt),
@@ -106,6 +111,8 @@ class Analysis_Code:
         return self.response['text']
 
     def getAC(self):
+        print("getAC 실행")
+        print(self.response['text'])
         return self.response['text']
     
     async def run(self,quiz, user_code):

@@ -19,7 +19,7 @@ class Quizgen:
     def __init__(self):
 # FSL 참고용(랭체인) 리펙터링 필요함 그냥 FSL 느낌용 코드라고 봐주세요
         os.environ['OPENAI_API_KEY'] = self.API_KEY
-        self.llm = ChatOpenAI(model= "gpt-3.5-turbo",temperature = .5)
+        self.llm = ChatOpenAI(model= "gpt-4o",temperature = .5)
 
 #FSL을 위한 파일 탐색, 폴더 데이터 갯수 만큼 데이터 가져오기
 #예, loop가 유사도 검색에서 선택되면, loop 폴더 안 데이터(JSON 형식)을 가져오기 위해 폴더 안 데이터가 몇개인지 확인하기 위한 코드
