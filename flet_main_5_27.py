@@ -13,7 +13,7 @@ class uiMain:
         self.quizGen = Quizgen()
         self.ac = Analysis_Code()
         self.urls = [
-            "https://youtu.be/KGyK-pNvWos",
+            "https://github.com/SMU-AI-X-Advanced/video/raw/master/assets/ocr_audio.mp4",
             "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
             "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
 
