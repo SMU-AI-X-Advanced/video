@@ -7,7 +7,7 @@ from quiz_generator import Quizgen
 from analysis_Code import Analysis_Code
 from V3_5_28 import OCRVideoPlayer, VideoOCR
 import flet as ft
-from retreiver import main
+from retreiver import getrtv
 
 class uiMain:
     def __init__(self):
@@ -19,6 +19,9 @@ class uiMain:
             "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
         ]
         self.ocr = VideoOCR(self.urls)
+        self.ac_result = {"문제":"",
+                          "분석 결과":"",
+                          "권장 알고리즘":""}
 
     async def main(self, page: Page):
         self.userCode = ''
@@ -33,8 +36,8 @@ class uiMain:
         page.title = "다해 PYTHON 인강"
         page.window_width = 1500
         image = Image(src="/assets/image/main_page.png", width=400, height=400, fit=ImageFit.COVER)
-        id_TF = TextField(label="아이디를 입력해주세요.",width=100)
-        pw_TF = TextField(label="아이디를 입력해주세요.",width=100)
+        # id_TF = TextField(label="아이디를 입력해주세요.",width=100)
+        # pw_TF = TextField(label="아이디를 입력해주세요.",width=100)
         pb1 = ft.MenuBar(
             style=ft.MenuStyle(
                 bgcolor=ft.colors.WHITE),
@@ -133,7 +136,56 @@ class uiMain:
             json_text = '{' + processed_value + '}'
             print(json_text)
             A_code_json = json.loads(json_text)
+            self.ac_result = A_code_json
             return A_code_json
+        
+        #복습 피드백 부분  끝나는 부분 주석으로 줄 그어둘게 중간에 jump to ocr 함수는 v3에 있어서 아래 함수 v3에서 구현할 것
+        
+        def go_feedback(e):
+            code_start_time, code_end_time, code_topic = 0,0,0
+            print(self.ac_result['권장 알고리즘'])
+            if self.ac_result['권장 알고리즘'] != '0':
+                if "삽입 정렬" in self.ac_result['권장 알고리즘']:
+                    code_start_time, code_end_time, code_topic = getrtv.getrtv("삽입 정렬 (Insertion Sorting)- 파이썬 구현")
+                elif "선택 정렬" in self.ac_result['권장 알고리즘']:
+                    code_start_time, code_end_time, code_topic =getrtv("선택 정렬 (Selection Sorting) - 파이썬 구현")
+                elif "퀵 정렬" in self.ac_result['권장 알고리즘']:
+                    code_start_time, code_end_time, code_topic =getrtv("퀵 정렬 (Quick Sorting) - 파이썬 구현")
+                elif "계수 정렬" in self.ac_result['권장 알고리즘']:
+                    code_start_time, code_end_time, code_topic =getrtv("계수 정렬 - 파이썬 구현")
+                fb_json={"code_start_timestamp": code_start_time,"code_end_timestamp": code_end_time,"topic":code_topic}
+                fb_update_ui(fb_json)
+        
+        def fb_update_ui(json_data):
+            ocr_text_field = ft.TextField(
+                        value=json_data["topic"],
+                        # value=str(n),
+                        multiline=True,
+                        width=400,
+                        height=70,
+                        bgcolor=ft.colors.BLUE_200
+                )
+            go_button = ft.ElevatedButton(
+                        '　',
+                        icon=ft.icons.SEND_ROUNDED,
+                        icon_color=ft.colors.PINK_400,
+                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=1)),
+                        on_click=lambda e, t=json_data["code_start_timestamp"]: OCRVideoPlayer.jump_to_ocr_time(e, t),
+                        width=50,
+                        height=70,
+                        bgcolor=ft.colors.WHITE
+                )
+            row = ft.Row([
+                    ocr_text_field,
+                    go_button],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=0  
+                )
+            OCRVideoPlayer.ocr_results.controls.append(row)
+            page.go("/lecture1")
+            page.update()
+
+                #-----------------------------------------------------------------------------------------------------------
 
         def check_item_clicked(e):
             e.control.checked = not e.control.checked
@@ -199,8 +251,10 @@ class uiMain:
                         "/quizGen",
                         [
                             AppBar(title=Text("강의 복습 및 퀴즈 풀기 ", size=30), bgcolor=colors.SURFACE_VARIANT),
-                            Text(getQu()),
-                            user_code_input,
+                            Column(controls=[Text(getQu()),user_code_input],
+                                   scroll=ft.ScrollMode.ALWAYS,
+                                   height=page.height
+                                   )
                         ],
                     )
                 )
@@ -210,12 +264,16 @@ class uiMain:
                         "/analCode",
                         [
                             AppBar(title=Text("사용자 코드 분석 결과 ", size=30), bgcolor=colors.SURFACE_VARIANT),
-                            Text("\n*문제*", size=22),
-                            Text((await getAnalCode())["문제"]),
-                            Text("*사용자가 입력한 코드*", size=22),
-                            Text(user_code_input.value),
-                            Text("\n*분석 결과*", size=22),
-                            Text((await getAnalCode())["분석 결과"]),
+                            Column(controls=[Text("\n*문제*", size=22),
+                                Text((await getAnalCode())["문제"]),
+                                Text("*사용자가 입력한 코드*", size=22),
+                                Text(user_code_input.value),
+                                Text("\n*분석 결과*", size=22),
+                                Text((await getAnalCode())["분석 결과"]),
+                                ElevatedButton("복습 하러가기" , on_click= go_feedback),
+                                Text("\n\n\n\n",size=15)],
+                                scroll=ft.ScrollMode.ALWAYS,
+                                height=700)                        
                         ],
                     )
                 )

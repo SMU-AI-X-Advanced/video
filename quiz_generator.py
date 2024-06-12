@@ -22,7 +22,6 @@ class Quizgen:
         self.llm = ChatOpenAI(model= "gpt-4o",temperature = .5)
 
 #FSL을 위한 파일 탐색, 폴더 데이터 갯수 만큼 데이터 가져오기
-#예, loop가 유사도 검색에서 선택되면, loop 폴더 안 데이터(JSON 형식)을 가져오기 위해 폴더 안 데이터가 몇개인지 확인하기 위한 코드
     def count_files_in_folder(self,folder_path):
         files = os.listdir(folder_path)
         
@@ -36,11 +35,10 @@ class Quizgen:
         return file_count
 
     #유사도 검색에서 색출된 파일 경로 제공 함수
-    #indexFile = 색인 단어, 예, loop면 loop 폴더 경로 제공
     def getFolderName(self,indexFile):
         file_path = ''
-        if  indexFile == "loop":
-            file_path = "./assets/quizGen/loop/"
+        if  indexFile == "sort":
+            file_path = "./assets/quizGen/sort/"
         #else if indexFile == "if":
         #    file_path = "./quizGen/if"
         
@@ -70,18 +68,18 @@ class Quizgen:
                             ("ai","{answer}")
                         ]
                     ),
-                    examples=self.genFSL_Prompt("loop")  # loop로 임시 고정 Code TEST
+                    examples=self.genFSL_Prompt("sort")
                 )
 
         total_prompt = ChatPromptTemplate.from_messages(
             [
-                ("system", "반복문 다음과 같은 유형의 비슷한 문제를 생성해줘"),
+                ("system", "정렬 알고리즘 관련해서 다음과 같은 유형의 비슷한 문제를 생성해줘"),
                 FSL_prompt,
                 ("human","문제 줘!"),
             ]
         )
         chain_input = {
-            'question' : "반복문 문제 생성해줘"
+            'question' : "정렬 문제 생성해줘"
         }
         self.quizGenerator = LLMChain(
             prompt = total_prompt,

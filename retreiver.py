@@ -56,7 +56,7 @@ class rtv_chain():
         return result
 
 # 쿼리 입력 및 타임스탬프 검색
-async def main(query):
+def getrtv(query):
     llm = rtv_chain()
     query = query
     result = llm.search_vulnerability(query)
@@ -66,7 +66,6 @@ async def main(query):
         print(f"Code Start Timestamp: {source_doc.metadata['code_start_timestamp']}")
         print(f"Code End Timestamp: {source_doc.metadata['code_end_timestamp']}")
         print(f"Topics : {source_doc.metadata['topic']}")
+        return source_doc.metadata['code_start_timestamp'],source_doc.metadata['code_end_timestamp'],source_doc.metadata['topic']
     else:
         print("No relevant code found.")
-
-    return source_doc.metadata['code_start_timestamp'],source_doc.metadata['code_end_timestamp'],source_doc.metadata['topic']
