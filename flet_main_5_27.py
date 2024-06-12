@@ -7,16 +7,16 @@ from quiz_generator import Quizgen
 from analysis_Code import Analysis_Code
 from V3_5_28 import OCRVideoPlayer, VideoOCR
 import flet as ft
+from retreiver import main
 
 class uiMain:
     def __init__(self):
         self.quizGen = Quizgen()
         self.ac = Analysis_Code()
         self.urls = [
-            "https://github.com/SMU-AI-X-Advanced/video/raw/master/assets/ocr_audio.mp4",
+            "https://github.com/SMU-AI-X-Advanced/video/raw/master/assets/dongbinna_sorting_algo.mp4",
             "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
             "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
-
         ]
         self.ocr = VideoOCR(self.urls)
 
@@ -44,23 +44,23 @@ class uiMain:
                         style= ft.ButtonStyle(bgcolor=colors.WHITE),
                         controls=[
                             ft.MenuItemButton(
-                                content = Text("합병 정렬"),
+                                content = Text("정렬 알고리즘"),
                                 on_click =lambda e: sel_lecture(e, 1)
                             ),
                             ft.MenuItemButton(
-                                content = Text("퀵 정렬"),
+                                content = Text("탐색 알고리즘"),
                                 on_click =lambda e: sel_lecture(e, 2)
                             ),
                             ft.MenuItemButton(
-                                content = Text("선택 정렬"),
+                                content = Text("부호화"),
                                 on_click =lambda e: sel_lecture(e, 3)
                             ),
                             ft.MenuItemButton(
-                                content = Text("버블 정렬"),
+                                content = Text("암호화"),
                                 on_click =lambda e: sel_lecture(e, 4)
                             ),
                             ft.MenuItemButton(
-                                content = Text("순차 정렬"),
+                                content = Text("자료 구조"),
                                 on_click =lambda e: sel_lecture(e, 5)
                             )
                         ]

@@ -190,10 +190,10 @@ class OCRVideoPlayer:
         )
         self.side_bar_container = ft.Container(
             content=ft.Column([
-                ft.ElevatedButton(text="재생목록",on_click=self.show_playlist,width=100,),
-                ft.ElevatedButton(text="스크립트",on_click=self.show_script,width=100),
-                ft.ElevatedButton(text="메모장",width=100),
-                ft.ElevatedButton(text="Q&A",width=100),
+                ft.ElevatedButton(text="재생목록",on_click=self.show_playlist,width=150,),
+                ft.ElevatedButton(text="스크립트",on_click=self.show_script,width=150),
+                ft.ElevatedButton(text="메모장",width=150),
+                ft.ElevatedButton(text="Q&A",width=150),
                 
             ])
         )
@@ -276,14 +276,14 @@ class OCRVideoPlayer:
     #     # 여기에 stt 스크립트 추가가된다면 어떻게될까
     #  ocr 결과 업데이트
     def update_ui(self,index):
-        path ='vidoe'+str(index)+'.json'
+        path ='./script_data/extracted_data.json'
         print(path)
         with open(path,'r', encoding='UTF-8') as file:
             data=json.load(file)
         self.ocr_results.controls.clear()
         for item in data:
             ocr_text_field = ft.TextField(
-                value=item["code_text"],
+                value=item["topic"],
                 # value=str(n),
                 multiline=True,
                 width=400,
@@ -319,10 +319,9 @@ class OCRVideoPlayer:
 
 def main(page: ft.Page):
     urls = [
-        "https://youtu.be/KGyK-pNvWos",
-        "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
-        "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
-
+            "https://github.com/SMU-AI-X-Advanced/video/raw/master/assets/dongbinna_sorting_algo.mp4",
+            "https://github.com/SMU-AI-X-Advanced/multi-channel-video-analyze/raw/main/only_code.mp4",
+            "https://github.com/SMU-AI-X-Advanced/video/raw/master/ocr_audio.mp4",
     ]
     ocr=OCRVideoPlayer(page, urls) ####
 

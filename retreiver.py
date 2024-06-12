@@ -27,8 +27,7 @@ def load_json_files(directory_path):
                                 "code_start_timestamp": item["code_start_timestamp"],
                                 "code_end_timestamp": item["code_end_timestamp"],
                                 "code_text": item["code_text"],
-                                "topic": item["topic"],
-                                "source_file": filename 
+                                "topic": item["topic"]
                             }
                         )
                         documents.append(doc)
@@ -64,9 +63,10 @@ async def main(query):
 
     if result and 'source_documents' in result:
         source_doc = result['source_documents'][0]
-        print(f"Source File: {source_doc.metadata['source_file']}")
         print(f"Code Start Timestamp: {source_doc.metadata['code_start_timestamp']}")
         print(f"Code End Timestamp: {source_doc.metadata['code_end_timestamp']}")
         print(f"Topics : {source_doc.metadata['topic']}")
     else:
         print("No relevant code found.")
+
+    return source_doc.metadata['code_start_timestamp'],source_doc.metadata['code_end_timestamp'],source_doc.metadata['topic']
